@@ -1,6 +1,7 @@
 from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
+from app.result_views import *
 
 upload = views.FileViewSet.as_view({
     'post': 'create'
@@ -39,6 +40,14 @@ question_d = views.QuestionViewSet.as_view({
     'delete': 'destroy'
 })
 
+feedback = views.FeedbackViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
+result_d = ResultAPI.as_view()
+
+
 urlpatterns = [
     re_path(r'^articles/$', article_list),
     re_path(r'^articles/(?P<pk>[0-9]+)$', article_detail),
@@ -46,7 +55,8 @@ urlpatterns = [
     re_path(r'^category/(?P<pk>[0-9]+)$', category_d),
     re_path(r'^question/$', question_l),
     re_path(r'^question/(?P<pk>[0-9]+)$', question_d),
+    re_path(r'^feedback/$', feedback),
     re_path(r'^upload/$', upload),
+    re_path('^result', result_d),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)

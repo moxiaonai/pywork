@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Article, FileModel, Category, Question
+from .models import Article, FileModel, Category, Question, Feedback
 
 class ArticleSerializer(serializers.ModelSerializer):
 
@@ -19,6 +19,13 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
+        fields = '__all__'
+        read_only_fields = ('id', 'create_date')
+
+class FeedbackSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Feedback
         fields = '__all__'
         read_only_fields = ('id', 'create_date')
 

@@ -47,6 +47,19 @@ class Question(models.Model):
     class Meta:
         ordering = ['-create_date']
 
+class Feedback(models.Model):
+    """Feedback Model"""
+
+    title = models.CharField(verbose_name=_('Title'), max_length=90, db_index=True)
+    content = models.TextField(verbose_name=_('Content'), blank=True)
+    create_date = models.DateTimeField(verbose_name=_('Create Date'), auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-create_date']
+
 class FileModel(models.Model):
     name = models.CharField(max_length=50)
     file = models.FileField(upload_to='static/media/upload')
