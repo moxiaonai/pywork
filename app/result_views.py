@@ -14,8 +14,6 @@ class ResultAPI(APIView):
         try:
             answer =  req.data['answer']
         except KeyError:
-
-
              return JsonResponse({
                  'code': 200,
                  'message': 'success',
@@ -23,9 +21,12 @@ class ResultAPI(APIView):
              })
         else:
              mbti = ResultConfig.mbti()
-             print(answer)
-             lst = json.loads(answer)
-             res = Counter(lst)
+             if not isinstance(answer, list):
+                lst = json.loads(answer)
+                res = Counter(lst)
+
+             else:
+                res = Counter(answer)
 
              def subdict(d, ks):
                  return dict(zip(ks, itemgetter(*ks)(d)))
