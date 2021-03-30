@@ -15,7 +15,7 @@ class Article(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-create_date']
+        ordering = ['create_date']
 
 class Category(models.Model):
     """Category Model"""
@@ -30,7 +30,7 @@ class Category(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-create_date']
+        ordering = ['create_date']
 
 
 class Question(models.Model):
@@ -45,7 +45,7 @@ class Question(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-create_date']
+        ordering = ['create_date']
 
 class Feedback(models.Model):
     """Feedback Model"""
@@ -58,7 +58,7 @@ class Feedback(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-create_date']
+        ordering = ['create_date']
 
 class FileModel(models.Model):
     name = models.CharField(max_length=50)
