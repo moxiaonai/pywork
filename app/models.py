@@ -74,9 +74,9 @@ class Record(models.Model):
     """Record Model"""
     title = models.CharField(verbose_name=_('Title'), max_length=90, db_index=True)
     content = models.TextField(verbose_name=_('Content'), blank=True)
-    psy_type = models.CharField(verbose_name=_('Psy Type'), max_length=11, db_index=True)
-    user_id = models.CharField(verbose_name=_('User Id'), max_length=11, db_index=True)
+    openid = models.CharField(verbose_name=_('Open Id'), max_length=32, blank=True, db_index=True)
     create_date = models.DateTimeField(verbose_name=_('Create Date'), auto_now_add=True)
+    psy_type = models.ForeignKey(to='Category', db_constraint=False, on_delete=models.DO_NOTHING, null=True)
 
     def __str__(self):
         return self.title

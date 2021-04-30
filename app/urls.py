@@ -46,17 +46,25 @@ feedback = views.FeedbackViewSet.as_view({
     'post': 'create'
 })
 
+record = views.RecordViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+record_d = views.RecordDetailView.as_view()
+
 result_d = ResultAPI.as_view()
 login_v = LoginView.as_view()
 urlpatterns = [
-    re_path(r'^articles/$', article_list),
     re_path(r'^articles/(?P<pk>[0-9]+)$', article_detail),
-    re_path(r'^category/$', category_l),
+    re_path(r'^articles/$', article_list),
     re_path(r'^category/(?P<pk>[0-9]+)$', category_d),
-    re_path(r'^question/$', question_l),
+    re_path(r'^category/$', category_l),
     re_path(r'^question/(?P<pk>[0-9]+)$', question_d),
+    re_path(r'^question/$', question_l),
     re_path(r'^feedback/$', feedback),
     re_path(r'^upload/$', upload),
     re_path('^result/', result_d),
+    re_path(r'^record/(?P<pk>[0-9]+)$', record_d),
+    re_path('^record/', record),
     re_path('^login/$', LoginView.as_view()),                                 # 登录
 ]
