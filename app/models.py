@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
 
+
 class Article(models.Model):
     """Article Model"""
 
@@ -16,6 +17,7 @@ class Article(models.Model):
 
     class Meta:
         ordering = ['create_date']
+
 
 class Category(models.Model):
     """Category Model"""
@@ -47,6 +49,7 @@ class Question(models.Model):
     class Meta:
         ordering = ['create_date']
 
+
 class Feedback(models.Model):
     """Feedback Model"""
 
@@ -60,6 +63,23 @@ class Feedback(models.Model):
     class Meta:
         ordering = ['create_date']
 
+
 class FileModel(models.Model):
+    """FileModel Model"""
     name = models.CharField(max_length=50)
     file = models.FileField(upload_to='static/media/upload')
+
+
+class Record(models.Model):
+    """Record Model"""
+    title = models.CharField(verbose_name=_('Title'), max_length=90, db_index=True)
+    content = models.TextField(verbose_name=_('Content'), blank=True)
+    psy_type = models.CharField(verbose_name=_('Psy Type'), max_length=11, db_index=True)
+    user_id = models.CharField(verbose_name=_('User Id'), max_length=11, db_index=True)
+    create_date = models.DateTimeField(verbose_name=_('Create Date'), auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['create_date']
