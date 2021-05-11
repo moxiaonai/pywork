@@ -1,5 +1,6 @@
 from .models import Article, FileModel, Category, Question, Feedback, Record
-from .serializers import ArticleSerializer, FileSerializer, CategorySerializer, QuestionSerializer, FeedbackSerializer, RecordSerializer
+from .serializers import ArticleSerializer, FileSerializer, CategorySerializer, QuestionSerializer, FeedbackSerializer, \
+    RecordSerializer
 from .serializers import ArticleFilter
 from app.utils.viewset_base import CustomViewBase
 from django_filters import rest_framework
@@ -7,6 +8,8 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from app.result_config import *
 from django.db.models import Q
+from app.login.access import AdministratorLevel
+
 
 # 文章
 class ArticleViewSet(CustomViewBase):
@@ -14,6 +17,7 @@ class ArticleViewSet(CustomViewBase):
     serializer_class = ArticleSerializer
     filter_backends = (rest_framework.DjangoFilterBackend,)
     filter_fields = ['title', 'content']
+    permission_classes = (AdministratorLevel,)  # 权限管理
 
     def perform_create(self, serializer):
         serializer.save()
@@ -31,6 +35,7 @@ class CategoryViewSet(CustomViewBase):
     serializer_class = CategorySerializer
     filter_backends = (rest_framework.DjangoFilterBackend,)
     filter_fields = ['title', 'type']
+    permission_classes = (AdministratorLevel,)  # 权限管理
 
     def perform_create(self, serializer):
         serializer.save()
@@ -42,6 +47,7 @@ class QuestionViewSet(CustomViewBase):
     serializer_class = QuestionSerializer
     filter_backends = (rest_framework.DjangoFilterBackend,)
     filter_fields = ['title', 'type']
+    permission_classes = (AdministratorLevel,)  # 权限管理
 
     def perform_create(self, serializer):
         serializer.save()
@@ -57,12 +63,14 @@ class FeedbackViewSet(CustomViewBase):
     def perform_create(self, serializer):
         serializer.save()
 
+
 # 结果记录
 class RecordViewSet(CustomViewBase):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
     filter_backends = (rest_framework.DjangoFilterBackend,)
     filter_fields = []
+    permission_classes = (AdministratorLevel,)  # 权限管理
 
     def perform_create(self, serializer):
         serializer.save()
@@ -77,7 +85,7 @@ class RecordDetailView(APIView):
         print(tags)
         q = Q()
         for tag in tags:
-            q |= Q(title__icontains = tag)
+            q |= Q(title__icontains=tag)
         articles = Article.objects.filter(q)
         print(articles)
         serialized = ArticleFilter(articles, many=True).data

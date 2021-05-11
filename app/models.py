@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from jsonfield import JSONField
+from django.contrib.auth.models import AbstractUser
 
 
 class Article(models.Model):
@@ -76,10 +76,16 @@ class Record(models.Model):
     content = models.TextField(verbose_name=_('Content'), blank=True)
     openid = models.CharField(verbose_name=_('Open Id'), max_length=32, blank=True, db_index=True)
     create_date = models.DateTimeField(verbose_name=_('Create Date'), auto_now_add=True)
-    psy_type = models.ForeignKey(to='Category', db_constraint=False, on_delete=models.DO_NOTHING, null=True)
+    psy_type = models.ForeignKey(to='Category', db_constraint=False, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = ['create_date']
+
+
+class User(AbstractUser):
+
+    class Meta:
+        db_table='auth_user'
