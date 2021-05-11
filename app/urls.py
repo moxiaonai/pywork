@@ -64,7 +64,7 @@ urlpatterns = [
     re_path(r'^feedback/$', feedback),
     re_path(r'^upload/$', upload),
     re_path('^result/', result_d),
-    re_path(r'^record/(?P<pk>[0-9]+)$', ResultAPI.as_view()),
+    re_path(r'^record/(?P<pk>[0-9]+)$',  views.RecordDetailView.as_view()),
     re_path('^record/', record),
     re_path('^login/$', LoginView.as_view()),
     re_path('^oplog/$', OpLoginView.as_view()),

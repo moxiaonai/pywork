@@ -6,6 +6,6 @@ class AdministratorLevel(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in ['GET']:
             return True
-        if request.session.get('is_login'):
+        if request.session.get('is_login') or request.META.get('HTTP_OPENID'):  # 后台登录或者小程序提交，具体不查了
             return True
         return False

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Article, FileModel, Category, Question, Feedback, Record
 from django.contrib.auth.hashers import check_password
-from app.models import User
+from app.models import MyUser
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -71,11 +71,11 @@ class LogSerializers(serializers.ModelSerializer):
     username = serializers.CharField(max_length=6)
 
     class Meta:
-        model = User
+        model = MyUser
         fields = ('username', 'password')
 
     def validate(self, attrs):
-        user_obj = User.objects.filter(username=attrs['username']).first()
+        user_obj = MyUser.objects.filter(username=attrs['username']).first()
         if user_obj:
             if check_password(attrs['password'], user_obj.password):
                 return attrs

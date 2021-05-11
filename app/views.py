@@ -59,6 +59,7 @@ class FeedbackViewSet(CustomViewBase):
     serializer_class = FeedbackSerializer
     filter_backends = (rest_framework.DjangoFilterBackend,)
     filter_fields = []
+    permission_classes = (AdministratorLevel,)  # 权限管理
 
     def perform_create(self, serializer):
         serializer.save()
@@ -87,8 +88,14 @@ class RecordDetailView(APIView):
         for tag in tags:
             q |= Q(title__icontains=tag)
         articles = Article.objects.filter(q)
-        print(articles)
+        print(len(articles))
         serialized = ArticleFilter(articles, many=True).data
+
+        if not articles:
+            articles = Article.objects.filter()
+            serialized = ArticleFilter(articles, many=True).data
+            serialized = [serialized[0]]
+
         resp = {
             'title': record.title,
             'desc': record.content,

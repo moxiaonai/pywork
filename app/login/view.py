@@ -20,10 +20,10 @@ def login_or_create_account(json_data):
     openid = json_data['openid']
     session_key = json_data['session_key']
     try:
-        user = User.objects.get(username=openid)
+        user = MyUser.objects.get(username=openid)
         print('user', user)
     except:
-        user = User.objects.create(
+        user = MyUser.objects.create(
             username=openid,
             password=openid,
         )
@@ -59,7 +59,7 @@ class LoginView(APIView):
 
 
 class OpLoginView(APIView):
-    queryset = User.objects.all()
+    queryset = MyUser.objects.all()
     serializer_class = LogSerializers
 
     def post(self, request, *args, **kwargs):
