@@ -41,9 +41,13 @@ class ResultAPI(APIView):
             tags = mbti[r_str]['tag'].split("、")
             q = Q()
             for tag in tags:
-                q |= Q(title__icontains = tag)
+                q |= Q(title__icontains=tag)
             articles = Article.objects.filter(q)
             serialized = ArticleFilter(articles, many=True).data
+            if not articles:
+                articles = Article.objects.filter()
+                serialized = ArticleFilter(articles, many=True).data
+                serialized = [serialized[0]]
             resp = {
                 'val': r_str,
                 'desc': mbti[r_str],
